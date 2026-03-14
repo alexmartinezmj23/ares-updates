@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ares FnF Tools — Updates</title>
+  <script>
+    (function() {
+      const KEY = 'aresfnf_auth';
+      const PASS = 'aresfnfontop';
+      if (sessionStorage.getItem(KEY) !== '1') {
+        document.addEventListener('DOMContentLoaded', function() {
+          document.body.innerHTML = '';
+          const overlay = document.createElement('div');
+          overlay.style.cssText = 'position:fixed;inset:0;background:#0d0d0d;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;font-family:Segoe UI,system-ui,sans-serif;';
+          overlay.innerHTML = `
+            <div style="color:#fff;font-size:15px;font-weight:700;letter-spacing:0.3px;">Ares FnF Tools</div>
+            <input id="pw" type="password" placeholder="Contraseña" autofocus style="background:#111;border:1px solid #2a2a2a;color:#fff;padding:10px 14px;border-radius:8px;font-size:14px;outline:none;width:220px;text-align:center;">
+            <div id="err" style="color:#f87171;font-size:12px;min-height:16px;"></div>
+          `;
+          document.body.appendChild(overlay);
+          function check() {
+            if (document.getElementById('pw').value === PASS) {
+              sessionStorage.setItem(KEY, '1');
+              location.reload();
+            } else {
+              document.getElementById('err').textContent = 'Contraseña incorrecta';
+              document.getElementById('pw').value = '';
+            }
+          }
+          document.getElementById('pw').addEventListener('keydown', function(e) { if (e.key === 'Enter') check(); });
+        });
+      }
+    })();
+  </script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #0d0d0d;
+      color: #e2e2e2;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .container { max-width: 720px; margin: 0 auto; }
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #222;
+    }
+    header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: -0.3px;
+    }
+    header p {
+      font-size: 13px;
+      color: #666;
+      margin-top: 3px;
+    }
+    .badge {
+      display: inline-block;
+      background: #1a1a2e;
+      border: 1px solid #2a2a4a;
+      color: #818cf8;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .download-box {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .download-box .version-info h2 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+    }
+    .download-box .version-info p {
+      font-size: 13px;
+      color: #555;
+      margin-top: 4px;
+    }
+    .btn-download {
+      background: #4f46e5;
+      color: #fff;
+      border: none;
+      padding: 11px 22px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: background 0.15s;
+      white-space: nowrap;
+    }
+    .btn-download:hover { background: #4338ca; }
+    .install-steps {
+      background: #0a0a0a;
+      border: 1px solid #1a1a1a;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 48px;
+      font-size: 13px;
+      color: #888;
+      line-height: 1.8;
+    }
+    .install-steps strong { color: #aaa; }
+    .install-steps ol { padding-left: 18px; }
+    .install-steps li { margin-bottom: 4px; }
+    code {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: #c084fc;
+      font-family: 'Courier New', monospace;
+    }
+    h3.section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #444;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .changelog { display: flex; flex-direction: column; gap: 2px; }
+    .release {
+      border: 1px solid #1c1c1c;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .release-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      background: #111;
+    }
+    .release-header .ver {
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      min-width: 54px;
+    }
+    .release-header .date {
+      font-size: 12px;
+      color: #444;
+      flex: 1;
+    }
+    .tag {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+    }
+    .tag-latest { background: #14532d; color: #4ade80; border: 1px solid #166534; }
+    .tag-fix    { background: #1c1917; color: #a8a29e; border: 1px solid #292524; }
+    .release-body {
+      padding: 14px 18px;
+      background: #0d0d0d;
+      border-top: 1px solid #1c1c1c;
+    }
+    .release-body ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .release-body ul li {
+      font-size: 13px;
+      color: #999;
+      padding-left: 14px;
+      position: relative;
+      line-height: 1.5;
+    }
+    .release-body ul li::before {
+      content: '—';
+      position: absolute;
+      left: 0;
+      color: #333;
+    }
+    .release-body ul li span.hi { color: #c7c7c7; }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <header>
+      <div>
+        <h1>Ares FnF Tools <span class="badge">EXTENSION</span></h1>
+        <p>Autolister para Viagogo y StubHub · Uso privado</p>
+      </div>
+    </header>
+
+    <!-- DOWNLOAD BOX -->
+    <div class="download-box">
+      <div class="version-info">
+        <h2>Version 1.0.0 — última versión</h2>
+        <p>Descarga el zip, descomprime y reemplaza la carpeta de la extensión</p>
+      </div>
+      <a class="btn-download" href="https://github.com/alexmartinezmj23/ARES-FnF-Tools/releases/latest/download/ares-fnf-tools.zip">
+        Descargar ZIP
+      </a>
+    </div>
+
+    <!-- INSTALL INSTRUCTIONS -->
+    <div class="install-steps">
+      <strong>Como actualizar:</strong>
+      <ol>
+        <li>Descarga el ZIP y descomprímelo</li>
+        <li>Ve a <code>chrome://extensions</code> → activa <strong>Modo desarrollador</strong></li>
+        <li>Elimina la extensión antigua → <strong>Cargar descomprimida</strong> → selecciona la nueva carpeta</li>
+        <li>Tus settings se mantienen automaticamente</li>
+      </ol>
+    </div>
+
+    <!-- CHANGELOG -->
+    <h3 class="section-title">Changelog</h3>
+    <div class="changelog">
+
+      <div class="release">
+        <div class="release-header">
+          <span class="ver">v1.0.0</span>
+          <span class="date">14 Mar 2026</span>
+          <span class="tag tag-latest">LATEST</span>
+        </div>
+        <div class="release-body">
+          <ul>
+            <li><span class="hi">Lanzamiento inicial — Autolister Viagogo + StubHub</span></li>
+            <li><span class="hi">Autenticacion Hawk HMAC-SHA256 para StubHub</span></li>
+            <li><span class="hi">CSV templates para Viagogo y StubHub</span></li>
+            <li><span class="hi">Guia de uso integrada (GUIDE)</span></li>
+            <li><span class="hi">Settings persistentes via chrome.storage.sync</span></li>
+            <li><span class="hi">Log de actividad con boton de copia</span></li>
+            <li><span class="hi">Discord webhook para notificaciones de error</span></li>
+          </ul>
+        </div>
+      </div>
+
+
+
+    </div>
+
+  </div>
+</body>
+</html>
